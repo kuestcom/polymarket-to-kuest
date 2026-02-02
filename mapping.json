@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "updated": "2026-02-02",
+    "source": "polymarket",
+    "target": "kuest",
+    "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
+  },
+  "rules": {
+    "domain_suffix": {
+      "polymarket.com": "kuest.com"
+    },
+    "env_prefix": {
+      "POLYMARKET_": "KUEST_"
+    }
+  },
+  "endpoints": {
+    "clob_api": {
+      "polymarket": "https://clob.polymarket.com",
+      "kuest": "https://clob.kuest.com"
+    },
+    "clob_ws": {
+      "polymarket": "wss://ws-subscriptions-clob.polymarket.com",
+      "kuest": "wss://ws-subscriptions-clob.kuest.com"
+    },
+    "data_api": {
+      "polymarket": "https://data-api.polymarket.com",
+      "kuest": "https://data-api.kuest.com"
+    },
+    "bridge_api": {
+      "polymarket": "https://bridge.polymarket.com",
+      "kuest": "https://bridge.kuest.com"
+    },
+    "rtds_ws": {
+      "polymarket": "wss://ws-live-data.polymarket.com",
+      "kuest": "wss://ws-live-data.kuest.com"
+    },
+    "gamma_api": {
+      "polymarket": "https://gamma-api.polymarket.com",
+      "kuest": null,
+      "status": "not_available"
+    },
+    "geoblock_api": {
+      "polymarket": "https://api.polymarket.com",
+      "kuest": "https://api.kuest.com"
+    },
+    "relayer_api": {
+      "polymarket": "https://relayer.polymarket.com",
+      "kuest": "https://relayer.kuest.com/"
+    }
+  },
+  "headers": {
+    "POLYMARKET_ADDRESS": "KUEST_ADDRESS",
+    "POLYMARKET_NONCE": "KUEST_NONCE",
+    "POLYMARKET_SIGNATURE": "KUEST_SIGNATURE",
+    "POLYMARKET_TIMESTAMP": "KUEST_TIMESTAMP",
+    "POLYMARKET_API_KEY": "KUEST_API_KEY",
+    "POLYMARKET_PASSPHRASE": "KUEST_PASSPHRASE"
+  },
+  "env_vars": {
+    "POLYMARKET_PRIVATE_KEY": "KUEST_PRIVATE_KEY",
+    "POLYMARKET_API_KEY": "KUEST_API_KEY",
+    "POLYMARKET_API_SECRET": "KUEST_API_SECRET",
+    "POLYMARKET_API_PASSPHRASE": "KUEST_API_PASSPHRASE",
+    "POLYMARKET_ADDRESS": "KUEST_ADDRESS"
+  },
+  "optional_env_vars": [
+    "CLOB_API_URL",
+    "WS_CLOB_URL",
+    "DATA_API_URL",
+    "BRIDGE_API_URL",
+    "RTDS_WS_URL"
+  ],
+  "disallowed_env_vars": [
+    "GAMMA_API_URL"
+  ],
+  "sdk": {
+    "rust": {
+      "cargo": {
+        "polymarket-client-sdk": "kuest-client-sdk"
+      },
+      "imports": {
+        "polymarket_client_sdk": "kuest_client_sdk"
+      }
+    },
+    "python": {
+      "packages": {
+        "py-clob-client": "kuest-py-clob-client",
+        "py-order-utils": "kuest-py-order-utils",
+        "py-builder-signing-sdk": "kuest-py-builder-signing-sdk",
+        "py-eip712-structs": "kuest-py-eip712-structs"
+      },
+      "imports": {
+        "poly_eip712_structs": "kuest_eip712_structs"
+      },
+      "unchanged_imports": [
+        "py_clob_client",
+        "py_order_utils",
+        "py_builder_signing_sdk"
+      ]
+    }
+  },
+  "notes": {
+    "gamma_api": "Not available on Kuest. Remove, stub, or gate all Gamma calls.",
+    "bridge_host_disabled_by_default": "Some Kuest SDKs ship Bridge/Gamma hosts disabled by default. Pass the Kuest host explicitly if you need Bridge."
+  },
+  "support": {
+    "discord": "https://discord.gg/kuest",
+    "channel": "#dev-chat"
+  }
+}
