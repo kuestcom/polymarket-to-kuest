@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://kuest.com">
-    <img src="https://i.imgur.com/D4sTGrV.png" alt="Kuest" />
+    <img src="https://github.com/user-attachments/assets/5659ada8-691a-4289-91da-5e6aa7676e58" alt="Polymarket to Kuest" />
   </a>
 </p>
 
