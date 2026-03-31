@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.0",
-    "updated": "2026-02-02",
+    "version": "1.1",
+    "updated": "2026-03-31",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -57,12 +57,28 @@
     "POLYMARKET_API_KEY": "KUEST_API_KEY",
     "POLYMARKET_PASSPHRASE": "KUEST_PASSPHRASE"
   },
+  "eip712": {
+    "order_domain_name": {
+      "polymarket": "Polymarket CTF Exchange",
+      "kuest": "CTF Exchange"
+    }
+  },
   "env_vars": {
     "POLYMARKET_PRIVATE_KEY": "KUEST_PRIVATE_KEY",
     "POLYMARKET_API_KEY": "KUEST_API_KEY",
     "POLYMARKET_API_SECRET": "KUEST_API_SECRET",
     "POLYMARKET_API_PASSPHRASE": "KUEST_API_PASSPHRASE",
     "POLYMARKET_ADDRESS": "KUEST_ADDRESS"
+  },
+  "network": {
+    "polymarket": {
+      "chain_id": 137,
+      "collateral": "USDC.e"
+    },
+    "kuest": {
+      "chain_id": 80002,
+      "collateral": "testnet USDC"
+    }
   },
   "optional_env_vars": [
     "CLOB_API_URL",
@@ -99,6 +115,24 @@
         "py_builder_signing_sdk"
       ]
     }
+  },
+  "slug_migrations": {
+    "replace_gamma_ids_with_slugs": true,
+    "kuest_slug_endpoints": [
+      "GET /other",
+      "RTDS activity/comment subscriptions"
+    ]
+  },
+  "verification": {
+    "grep_absent": [
+      "polymarket.com",
+      "POLYMARKET_",
+      "Polymarket CTF Exchange"
+    ],
+    "required_replacements": [
+      "KUEST_",
+      "CTF Exchange"
+    ]
   },
   "notes": {
     "gamma_api": "Not available on Kuest. Remove, stub, or gate all Gamma calls.",

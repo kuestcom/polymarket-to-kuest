@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://kuest.com">
-    <img src="https://github.com/user-attachments/assets/5659ada8-691a-4289-91da-5e6aa7676e58" alt="Polymarket to Kuest" />
+    <img src="https://github.com/user-attachments/assets/1f608405-c381-4098-88dc-0c37cebb6038" alt="Polymarket to Kuest migration" />
   </a>
 </p>
 
@@ -15,10 +15,12 @@ requires only small changes to endpoints, headers, and environment variables.
 ## What's here
 - [`MIGRATION.md`](./MIGRATION.md) — step-by-step migration guide for humans.
 - [`mapping.json`](./mapping.json) — machine-readable mapping for automation or LLM-assisted refactors.
+- [`AGENTS.md`](./AGENTS.md) — compact instructions for coding agents and migration tooling.
 
 ## Quick notes
 - Replace `POLYMARKET_` with `KUEST_` in env vars and auth headers.
 - Replace `*.polymarket.com` with `*.kuest.com` (same subdomain).
+- Kuest order signing uses the EIP-712 domain `CTF Exchange`.
 - Gamma API is not available on Kuest.
 
 ## Network (beta)
