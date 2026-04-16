@@ -41,8 +41,8 @@
       "status": "not_available"
     },
     "geoblock_api": {
-      "polymarket": "https://api.polymarket.com",
-      "kuest": "https://api.kuest.com"
+      "polymarket": "https://polymarket.com/api/geoblock",
+      "kuest": "https://geoblock.kuest.com"
     },
     "relayer_api": {
       "polymarket": "https://relayer.polymarket.com",
