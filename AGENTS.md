@@ -11,6 +11,11 @@ Required migration rules:
 - Replace every `*.polymarket.com` host with the matching `*.kuest.com` host.
 - Do not call Gamma on Kuest. Remove, stub, or gate Gamma integrations.
 - Kuest order signing uses the EIP-712 domain name `CTF Exchange`.
+- Kuest order signing uses Exchange domain version `2`; auth headers keep the auth-domain version used by the SDK.
+- V2 signed orders remove `taker`, `expiration`, `nonce`, and `feeRateBps`.
+- V2 signed orders add `timestamp`, `metadata`, and `builder`.
+- Send order `owner` as the CLOB API key, not `KUEST_ADDRESS`.
+- Use `builderCode`/`builder_code` for attribution; Kuest encodes builder wallets as bytes32.
 - Do not keep `Polymarket CTF Exchange` when building Kuest order signatures.
 
 SDK/package mapping:
@@ -26,11 +31,14 @@ SDK/package mapping:
 Network rules:
 - Kuest beta uses Polygon Amoy, chainId `80002`
 - Polymarket mainnet uses Polygon, chainId `137`
-- Kuest uses testnet USDC
-- Polymarket uses USDC.e collateral on mainnet
+- Kuest uses USDC Circle directly
+- Polymarket V2 uses pUSD collateral on mainnet
+- Kuest CTF Exchange: `0x4bB1871fdaE80331ce5fF87547b8ff886D1695a5`
+- Kuest Neg Risk CTF Exchange: `0xdb1E374a05130d7DE3F16677066553F225D2eE53`
 
 Endpoint notes:
 - Keep the same Kuest subdomain when replacing a Polymarket host.
+- Wire V2 helper endpoints when SDK code calls them: `/version`, `/clob-markets/{conditionId}`, `/fees/builder-fees/{builderCode}`, and `/builder/trades?builder_code=...`.
 - Kuest uses slugs in some places where Polymarket code often uses Gamma IDs.
 - In particular, market-scoped Kuest lookups may require event slugs for Data API and RTDS flows.
 

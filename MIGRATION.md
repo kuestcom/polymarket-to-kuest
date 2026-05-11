@@ -5,12 +5,19 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 ## Quick checklist
 - Replace every `POLYMARKET_` prefix with `KUEST_` in env vars and headers.
 - Replace every `*.polymarket.com` domain with `*.kuest.com`, keeping the same subdomain.
+- Use Exchange EIP-712 domain `name = "CTF Exchange"` and `version = "2"` for orders. Auth/L1/L2 headers keep their existing auth-domain version.
+- Remove `taker`, `expiration`, `nonce`, and `feeRateBps` from the signed order struct.
+- Add signed order fields `timestamp` in milliseconds, `metadata` bytes32, and `builder` bytes32.
+- Keep `expiration` only as an offchain HTTP field for `GTD` orders.
+- Send `owner` as the CLOB API key (`KUEST_API_KEY`), not the wallet address.
+- Use `builderCode`/`builder_code` for attribution; Kuest builder codes are builder wallets encoded as bytes32.
+- Trading is Deposit Wallet + signature type 3 only.
 - Gamma is NOT available on Kuest. Remove, stub, or gate all Gamma calls.
 - CLOB, WS, Data, RTDS, and Bridge are otherwise compatible and similar.
 
 ## Network and collateral (beta)
 - Kuest beta is on Polygon Amoy (chainId 80002) and uses testnet USDC.
-- Polymarket mainnet uses Polygon (chainId 137) and USDC.e collateral.
+- Polymarket V2 uses Polygon (chainId 137) and pUSD collateral; Kuest V2 uses USDC Circle directly.
 
 ## Endpoint mapping
 | Service      | Polymarket                                  | Kuest                                   |
@@ -26,6 +33,20 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 
 Notes:
 - Some Kuest SDKs ship Bridge/Gamma hosts as disabled by default. If you need Bridge, pass the Kuest host explicitly. Gamma should remain disabled.
+- For V2 discovery and builder flows, wire `GET /version`, `GET /clob-markets/{conditionId}`, `GET /fees/builder-fees/{builderCode}`, and `GET /builder/trades?builder_code=...`.
+
+## Kuest V2 contracts and collateral
+| Name | Address |
+|------|---------|
+| CTF Exchange | `0x4bB1871fdaE80331ce5fF87547b8ff886D1695a5` |
+| Neg Risk CTF Exchange | `0xdb1E374a05130d7DE3F16677066553F225D2eE53` |
+| NegRisk Adapter | `0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5` |
+| NegRisk Operator | `0xEb330AB2700aCAf8aF73EF12fA4225aE31E137c3` |
+| NegRisk UMA CTF Adapter | `0x4b8D05583085716A684E50c2861333d88D85Bbd6` |
+| DepositWallet Factory | `0x3DaBe8f032833CE42CC26d9149660E6f596759C5` |
+| DepositWallet Impl | `0xFB2f5D822Ecb062dE63a7B830C5e83C994698851` |
+| USDC Circle (Amoy) | `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582` |
+| USDC Circle (Polygon mainnet) | `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359` |
 
 ## Auth header mapping
 Replace header names exactly:
@@ -41,7 +62,21 @@ Replace header names exactly:
 
 ## EIP-712 domains (orders)
 - Polymarket order domain name: `Polymarket CTF Exchange`.
-- Kuest order domain name: `CTF Exchange` (required for orders to be accepted).
+- Kuest order domain name: `CTF Exchange` and version `2` (required for orders to be accepted).
+
+## Signed order payload V2
+Remove these fields from the signed payload:
+- `taker`
+- `expiration`
+- `nonce`
+- `feeRateBps`
+
+Add these fields to the signed payload:
+- `timestamp` as a millisecond timestamp
+- `metadata` as bytes32
+- `builder` as bytes32
+
+Do not send fee basis points in the order signature. The CLOB calculates Kuest + builder fees and sends absolute USDC fee amounts to the V2 exchanges during settlement.
 
 ## Environment variables
 Replace env vars exactly:
@@ -70,6 +105,11 @@ Optional endpoint env vars (same names):
 - The client pulls its required dependencies automatically.
 
 If you directly use other Polymarket Python subpackages, see `mapping.json` for the full package mapping.
+
+### Builder relayer clients
+- TypeScript: `@polymarket/builder-relayer-client` -> `@kuestcom/builder-relayer-client`
+- Python: `py-builder-relayer-client` -> `kuest-py-builder-relayer-client`
+- Use only Deposit Wallet methods: derive, deploy, execute batch, and transaction polling.
 
 ## Gamma replacement guidance
 If the script uses Gamma for market discovery or token lookup, replace it with another available source in your environment (for example, a preloaded market list or a data API you already use). Do not call Gamma endpoints on Kuest.

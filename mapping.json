@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.1",
-    "updated": "2026-03-31",
+    "version": "1.2",
+    "updated": "2026-04-28",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -47,6 +47,12 @@
     "relayer_api": {
       "polymarket": "https://relayer.polymarket.com",
       "kuest": "https://relayer.kuest.com/"
+    },
+    "v2_required_paths": {
+      "version": "GET /version",
+      "clob_market": "GET /clob-markets/{conditionId}",
+      "builder_fees": "GET /fees/builder-fees/{builderCode}",
+      "builder_trades": "GET /builder/trades?builder_code={builderCode}"
     }
   },
   "headers": {
@@ -61,6 +67,32 @@
     "order_domain_name": {
       "polymarket": "Polymarket CTF Exchange",
       "kuest": "CTF Exchange"
+    },
+    "exchange_domain_version": {
+      "polymarket_v1": "1",
+      "polymarket_v2": "2",
+      "kuest": "2"
+    },
+    "auth_domain_version": {
+      "kuest": "1"
+    },
+    "signed_order_v2": {
+      "remove_fields": [
+        "taker",
+        "expiration",
+        "nonce",
+        "feeRateBps"
+      ],
+      "add_fields": {
+        "timestamp": "uint256 milliseconds",
+        "metadata": "bytes32",
+        "builder": "bytes32"
+      },
+      "offchain_fields": [
+        "expiration for GTD orders"
+      ],
+      "owner": "KUEST_API_KEY, not KUEST_ADDRESS",
+      "builder_code": "builder wallet encoded as bytes32(uint256(uint160(wallet)))"
     }
   },
   "env_vars": {
@@ -73,11 +105,24 @@
   "network": {
     "polymarket": {
       "chain_id": 137,
-      "collateral": "USDC.e"
+      "collateral": "pUSD"
     },
     "kuest": {
       "chain_id": 80002,
-      "collateral": "testnet USDC"
+      "collateral": "USDC Circle",
+      "usdc_amoy": "0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582",
+      "usdc_mainnet": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359"
+    }
+  },
+  "contracts": {
+    "kuest": {
+      "ctf_exchange": "0x4bB1871fdaE80331ce5fF87547b8ff886D1695a5",
+      "neg_risk_ctf_exchange": "0xdb1E374a05130d7DE3F16677066553F225D2eE53",
+      "neg_risk_adapter": "0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5",
+      "neg_risk_operator": "0xEb330AB2700aCAf8aF73EF12fA4225aE31E137c3",
+      "neg_risk_uma_ctf_adapter": "0x4b8D05583085716A684E50c2861333d88D85Bbd6",
+      "deposit_wallet_factory_proxy": "0x3DaBe8f032833CE42CC26d9149660E6f596759C5",
+      "deposit_wallet_impl": "0xFB2f5D822Ecb062dE63a7B830C5e83C994698851"
     }
   },
   "optional_env_vars": [
@@ -104,16 +149,28 @@
         "py-clob-client": "kuest-py-clob-client",
         "py-order-utils": "kuest-py-order-utils",
         "py-builder-signing-sdk": "kuest-py-builder-signing-sdk",
-        "py-eip712-structs": "kuest-py-eip712-structs"
+        "py-eip712-structs": "kuest-py-eip712-structs",
+        "py-clob-client-v2": "kuest-py-clob-client",
+        "py-builder-relayer-client": "kuest-py-builder-relayer-client"
       },
       "imports": {
-        "poly_eip712_structs": "kuest_eip712_structs"
+        "poly_eip712_structs": "kuest_eip712_structs",
+        "py_clob_client_v2": "py_clob_client",
+        "py_builder_relayer_client": "py_builder_relayer_client"
       },
       "unchanged_imports": [
         "py_clob_client",
         "py_order_utils",
-        "py_builder_signing_sdk"
+        "py_builder_signing_sdk",
+        "py_builder_relayer_client"
       ]
+    },
+    "typescript": {
+      "packages": {
+        "@polymarket/clob-client-v2": "@kuestcom/clob-client",
+        "@polymarket/builder-relayer-client": "@kuestcom/builder-relayer-client",
+        "@polymarket/builder-signing-sdk": "@kuestcom/builder-signing-sdk"
+      }
     }
   },
   "slug_migrations": {
@@ -141,5 +198,21 @@
   "support": {
     "discord": "https://discord.gg/kuest",
     "channel": "#dev-chat"
+  },
+  "relayer_wallet_only": {
+    "required_paths": [
+      "GET /nonce",
+      "POST /submit",
+      "GET /transaction",
+      "GET /transactions",
+      "GET /deployed"
+    ],
+    "not_required": [
+      "GET /relay-payload"
+    ],
+    "transaction_types": [
+      "WALLET",
+      "WALLET-CREATE"
+    ]
   }
 }
