@@ -10,6 +10,7 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 - Add signed order fields `timestamp` in milliseconds, `metadata` bytes32, and `builder` bytes32.
 - Keep `expiration` only as an offchain HTTP field for `GTD` orders.
 - Send `owner` as the CLOB API key (`KUEST_API_KEY`), not the wallet address.
+- In Kuest CLOB responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest builder codes are builder wallets encoded as bytes32.
 - Trading is Deposit Wallet + signature type 3 only.
 - Gamma is NOT available on Kuest. Remove, stub, or gate all Gamma calls.

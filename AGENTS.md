@@ -15,6 +15,7 @@ Required migration rules:
 - V2 signed orders remove `taker`, `expiration`, `nonce`, and `feeRateBps`.
 - V2 signed orders add `timestamp`, `metadata`, and `builder`.
 - Send order `owner` as the CLOB API key, not `KUEST_ADDRESS`.
+- In Kuest CLOB responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes builder wallets as bytes32.
 - Do not keep `Polymarket CTF Exchange` when building Kuest order signatures.
 

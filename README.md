@@ -23,6 +23,7 @@ requires only small changes to endpoints, headers, and environment variables.
 - Kuest order signing uses the EIP-712 domain `CTF Exchange`, version `2`.
 - V2 orders remove `taker`, `expiration`, `nonce`, and `feeRateBps` from the signed payload and add `timestamp`, `metadata`, and `builder`.
 - Send `owner` as the CLOB API key, not the wallet address from `KUEST_ADDRESS`.
+- In Kuest CLOB order responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes a builder wallet as `bytes32(uint256(uint160(wallet)))`.
 - Gamma API is not available on Kuest.
 

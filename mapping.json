@@ -193,7 +193,8 @@
   },
   "notes": {
     "gamma_api": "Not available on Kuest. Remove, stub, or gate all Gamma calls.",
-    "bridge_host_disabled_by_default": "Some Kuest SDKs ship Bridge/Gamma hosts disabled by default. Pass the Kuest host explicitly if you need Bridge."
+    "bridge_host_disabled_by_default": "Some Kuest SDKs ship Bridge/Gamma hosts disabled by default. Pass the Kuest host explicitly if you need Bridge.",
+    "kuest_clob_order_owner": "Kuest CLOB order responses use ULID/string in owner. Deserialize this field as ULID/string."
   },
   "support": {
     "discord": "https://discord.gg/kuest",
