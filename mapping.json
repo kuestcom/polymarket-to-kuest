@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.2",
-    "updated": "2026-04-28",
+    "updated": "2026-06-02",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -119,8 +119,8 @@
       "ctf_exchange": "0x4bB1871fdaE80331ce5fF87547b8ff886D1695a5",
       "neg_risk_ctf_exchange": "0xdb1E374a05130d7DE3F16677066553F225D2eE53",
       "neg_risk_adapter": "0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5",
-      "neg_risk_operator": "0xEb330AB2700aCAf8aF73EF12fA4225aE31E137c3",
-      "neg_risk_uma_ctf_adapter": "0x4b8D05583085716A684E50c2861333d88D85Bbd6",
+      "neg_risk_operator": "0x368ed63Ab10F35f2BDD576bDbF6B1eDD151cB619",
+      "neg_risk_uma_ctf_adapter": "0x70DC1B3761F2902DF8F9b1B0C27dcEA128b4a876",
       "deposit_wallet_factory_proxy": "0x3DaBe8f032833CE42CC26d9149660E6f596759C5",
       "deposit_wallet_impl": "0xFB2f5D822Ecb062dE63a7B830C5e83C994698851"
     }
