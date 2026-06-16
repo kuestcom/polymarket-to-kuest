@@ -37,8 +37,7 @@
     },
     "gamma_api": {
       "polymarket": "https://gamma-api.polymarket.com",
-      "kuest": null,
-      "status": "not_available"
+      "kuest": "https://gamma-api.kuest.com"
     },
     "geoblock_api": {
       "polymarket": "https://polymarket.com/api/geoblock",
@@ -130,9 +129,7 @@
     "WS_CLOB_URL",
     "DATA_API_URL",
     "BRIDGE_API_URL",
-    "RTDS_WS_URL"
-  ],
-  "disallowed_env_vars": [
+    "RTDS_WS_URL",
     "GAMMA_API_URL"
   ],
   "sdk": {
@@ -192,7 +189,6 @@
     ]
   },
   "notes": {
-    "gamma_api": "Not available on Kuest. Remove, stub, or gate all Gamma calls.",
     "bridge_host_disabled_by_default": "Some Kuest SDKs ship Bridge/Gamma hosts disabled by default. Pass the Kuest host explicitly if you need Bridge.",
     "kuest_clob_order_owner": "Kuest CLOB order responses use ULID/string in owner. Deserialize this field as ULID/string."
   },
@@ -214,6 +210,16 @@
     "transaction_types": [
       "WALLET",
       "WALLET-CREATE"
-    ]
+    ],
+    "replace_transaction_types": {
+      "from": [
+        "SAFE",
+        "PROXY"
+      ],
+      "to": [
+        "WALLET",
+        "WALLET-CREATE"
+      ]
+    }
   }
 }

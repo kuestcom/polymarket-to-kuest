@@ -25,7 +25,7 @@ requires only small changes to endpoints, headers, and environment variables.
 - Send `owner` as the CLOB API key, not the wallet address from `KUEST_ADDRESS`.
 - In Kuest CLOB order responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes a builder wallet as `bytes32(uint256(uint160(wallet)))`.
-- Gamma API is not available on Kuest.
+- For direct relayer calls, use `WALLET` / `WALLET-CREATE` instead of `SAFE` / `PROXY`.
 
 ## Network (beta)
 - Kuest beta runs on Polygon Amoy (chainId 80002) and uses testnet USDC.

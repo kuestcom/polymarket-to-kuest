@@ -13,7 +13,7 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 - In Kuest CLOB responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest builder codes are builder wallets encoded as bytes32.
 - Trading is Deposit Wallet + signature type 3 only.
-- Gamma is NOT available on Kuest. Remove, stub, or gate all Gamma calls.
+- Direct relayer calls use `WALLET` / `WALLET-CREATE` instead of `SAFE` / `PROXY`.
 - CLOB, WS, Data, RTDS, and Bridge are otherwise compatible and similar.
 
 ## Network and collateral (beta)
@@ -21,19 +21,18 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 - Polymarket V2 uses Polygon (chainId 137) and pUSD collateral; Kuest V2 uses USDC Circle directly.
 
 ## Endpoint mapping
-| Service      | Polymarket                                  | Kuest                                   |
+| Service      | Polymarket                                   | Kuest                                   |
 |--------------|----------------------------------------------|-----------------------------------------|
 | CLOB API     | https://clob.polymarket.com                  | https://clob.kuest.com                  |
 | CLOB WS      | wss://ws-subscriptions-clob.polymarket.com   | wss://ws-subscriptions-clob.kuest.com   |
 | Data API     | https://data-api.polymarket.com              | https://data-api.kuest.com              |
 | Bridge API   | https://bridge.polymarket.com                | https://bridge.kuest.com                |
 | RTDS WS      | wss://ws-live-data.polymarket.com            | wss://ws-live-data.kuest.com            |
-| Gamma API    | https://gamma-api.polymarket.com             | NOT AVAILABLE                           |
+| Gamma API    | https://gamma-api.polymarket.com             | https://gamma-api.kuest.com             |
 | Geoblock API | https://api.polymarket.com                   | https://api.kuest.com                   |
 | Relayer API  | https://relayer.polymarket.com               | https://relayer.kuest.com/              |
 
 Notes:
-- Some Kuest SDKs ship Bridge/Gamma hosts as disabled by default. If you need Bridge, pass the Kuest host explicitly. Gamma should remain disabled.
 - For V2 discovery and builder flows, wire `GET /version`, `GET /clob-markets/{conditionId}`, `GET /fees/builder-fees/{builderCode}`, and `GET /builder/trades?builder_code=...`.
 
 ## Kuest V2 contracts and collateral
@@ -91,8 +90,7 @@ Replace env vars exactly:
 | `POLYMARKET_ADDRESS`        | `KUEST_ADDRESS`         |
 
 Optional endpoint env vars (same names):
-- `CLOB_API_URL`, `WS_CLOB_URL`, `DATA_API_URL`, `BRIDGE_API_URL`, `RTDS_WS_URL`
-- `GAMMA_API_URL` should NOT be used on Kuest
+- `CLOB_API_URL`, `WS_CLOB_URL`, `DATA_API_URL`, `BRIDGE_API_URL`, `RTDS_WS_URL`, `GAMMA_API_URL`
 
 ## SDK and package mapping
 ### Rust
@@ -112,9 +110,6 @@ If you directly use other Polymarket Python subpackages, see `mapping.json` for 
 - Python: `py-builder-relayer-client` -> `kuest-py-builder-relayer-client`
 - Use only Deposit Wallet methods: derive, deploy, execute batch, and transaction polling.
 
-## Gamma replacement guidance
-If the script uses Gamma for market discovery or token lookup, replace it with another available source in your environment (for example, a preloaded market list or a data API you already use). Do not call Gamma endpoints on Kuest.
-
 ## Slug-based lookups (Kuest vs Polymarket IDs)
 Kuest uses slugs in a few market-scoped endpoints where Polymarket typically relies on Gamma IDs.
 
@@ -133,8 +128,7 @@ Link: [mapping.json](./mapping.json)
 ## Final verification
 - No remaining `polymarket.com` hosts.
 - No `POLYMARKET_` env vars or headers.
-- Gamma calls removed or gated.
 - All SDK/package names updated.
 
 ## Support
-Questions: https://discord.gg/kuest (channel: #dev-chat)
+Questions: https://discord.gg/kuest (channel: #builders)

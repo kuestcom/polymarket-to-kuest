@@ -9,7 +9,6 @@ Primary rule:
 Required migration rules:
 - Replace every `POLYMARKET_` env var or header prefix with `KUEST_`.
 - Replace every `*.polymarket.com` host with the matching `*.kuest.com` host.
-- Do not call Gamma on Kuest. Remove, stub, or gate Gamma integrations.
 - Kuest order signing uses the EIP-712 domain name `CTF Exchange`.
 - Kuest order signing uses Exchange domain version `2`; auth headers keep the auth-domain version used by the SDK.
 - V2 signed orders remove `taker`, `expiration`, `nonce`, and `feeRateBps`.
@@ -17,6 +16,7 @@ Required migration rules:
 - Send order `owner` as the CLOB API key, not `KUEST_ADDRESS`.
 - In Kuest CLOB responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes builder wallets as bytes32.
+- Direct relayer calls use `WALLET` / `WALLET-CREATE` instead of `SAFE` / `PROXY`.
 - Do not keep `Polymarket CTF Exchange` when building Kuest order signatures.
 
 SDK/package mapping:
@@ -48,9 +48,8 @@ Recommended agent workflow:
 2. Replace domains and websocket hosts.
 3. Update SDK package names and imports.
 4. Fix EIP-712 order domain to `CTF Exchange`.
-5. Remove or gate Gamma calls.
-6. Check whether stored Gamma IDs need to become slugs.
-7. Run final grep checks for leftover `POLYMARKET_`, `polymarket.com`, and `Polymarket CTF Exchange`.
+5. Check whether stored Gamma IDs need to become slugs.
+6. Run final grep checks for leftover `POLYMARKET_`, `polymarket.com`, and `Polymarket CTF Exchange`.
 
 Repo files:
 - `README.md` gives the short overview.
