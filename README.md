@@ -32,8 +32,8 @@ requires only small changes to endpoints, headers, and environment variables.
 - Polymarket V2 uses Polygon (chainId 137) and pUSD collateral; Kuest V2 uses USDC Circle directly.
 
 ## Kuest V2 contracts and collateral
-- CTF Exchange: `0x4bB1871fdaE80331ce5fF87547b8ff886D1695a5`
-- Neg Risk CTF Exchange: `0xdb1E374a05130d7DE3F16677066553F225D2eE53`
+- CTF Exchange: `0xaCd95F4F42322c7bE215C170362EEc57Ef4E78c2`
+- Neg Risk CTF Exchange: `0x961d3230B3BBdb2592D20fa34dBD12Fa19240603`
 - USDC Circle (Amoy): `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582`
 - USDC Circle (Polygon mainnet): `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359`
 

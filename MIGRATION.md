@@ -38,8 +38,8 @@ Notes:
 ## Kuest V2 contracts and collateral
 | Name | Address |
 |------|---------|
-| CTF Exchange | `0x4bB1871fdaE80331ce5fF87547b8ff886D1695a5` |
-| Neg Risk CTF Exchange | `0xdb1E374a05130d7DE3F16677066553F225D2eE53` |
+| CTF Exchange | `0xaCd95F4F42322c7bE215C170362EEc57Ef4E78c2` |
+| Neg Risk CTF Exchange | `0x961d3230B3BBdb2592D20fa34dBD12Fa19240603` |
 | NegRisk Adapter | `0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5` |
 | NegRisk Operator | `0x368ed63Ab10F35f2BDD576bDbF6B1eDD151cB619` |
 | NegRisk UMA CTF Adapter | `0x70DC1B3761F2902DF8F9b1B0C27dcEA128b4a876` |
