@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.2",
-    "updated": "2026-06-02",
+    "updated": "2026-07-01",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -120,8 +120,9 @@
       "neg_risk_adapter": "0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5",
       "neg_risk_operator": "0x368ed63Ab10F35f2BDD576bDbF6B1eDD151cB619",
       "neg_risk_uma_ctf_adapter": "0x70DC1B3761F2902DF8F9b1B0C27dcEA128b4a876",
-      "deposit_wallet_factory_proxy": "0x3DaBe8f032833CE42CC26d9149660E6f596759C5",
-      "deposit_wallet_impl": "0xFB2f5D822Ecb062dE63a7B830C5e83C994698851"
+      "deposit_wallet_factory_proxy": "0x2CcdC6C5dDcd895aFcCD259F291de9b618A5cA6c",
+      "deposit_wallet_beacon": "0x74a618eBdd62Ff8579A8FE94f5B888d7623b9C35",
+      "deposit_wallet_impl": "0xf9dFAe108bF7d7aaa9E6D8c1aB281c6285BAF86c"
     }
   },
   "optional_env_vars": [
@@ -197,6 +198,11 @@
     "channel": "#dev-chat"
   },
   "relayer_wallet_only": {
+    "deposit_wallet_address_derivation": {
+      "factory_method": "predictWalletAddress(bytes32 walletId)",
+      "wallet_id": "bytes32(uint256(uint160(owner)))",
+      "do_not_pass_implementation": true
+    },
     "required_paths": [
       "GET /nonce",
       "POST /submit",
