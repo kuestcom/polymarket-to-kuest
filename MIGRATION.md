@@ -49,8 +49,6 @@ Notes:
 | USDC Circle (Amoy) | `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582` |
 | USDC Circle (Polygon mainnet) | `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359` |
 
-Deposit Wallet address derivation uses the factory method `predictWalletAddress(bytes32 walletId)`, where `walletId = bytes32(uint256(uint160(owner)))`. Do not pass an implementation address when deriving a wallet; the factory resolves the current beacon implementation internally.
-
 ## Auth header mapping
 Replace header names exactly:
 
