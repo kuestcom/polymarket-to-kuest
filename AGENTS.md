@@ -34,8 +34,8 @@ Network rules:
 - Polymarket mainnet uses Polygon, chainId `137`
 - Kuest uses USDC Circle directly
 - Polymarket V2 uses pUSD collateral on mainnet
-- Kuest CTF Exchange: `0xaCd95F4F42322c7bE215C170362EEc57Ef4E78c2`
-- Kuest Neg Risk CTF Exchange: `0x961d3230B3BBdb2592D20fa34dBD12Fa19240603`
+- Kuest CTF Exchange: `0xaa1b8dE834E16eC69C044F5300041673C968c9eF`
+- Kuest Neg Risk CTF Exchange: `0xe7FA09cA716FDf498d74AFF618d32AFeacc310aB`
 
 Endpoint notes:
 - Keep the same Kuest subdomain when replacing a Polymarket host.

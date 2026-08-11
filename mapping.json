@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.2",
-    "updated": "2026-07-01",
+    "version": "1.4",
+    "updated": "2026-08-04",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -115,14 +115,14 @@
   },
   "contracts": {
     "kuest": {
-      "ctf_exchange": "0xaCd95F4F42322c7bE215C170362EEc57Ef4E78c2",
-      "neg_risk_ctf_exchange": "0x961d3230B3BBdb2592D20fa34dBD12Fa19240603",
+      "ctf_exchange": "0xaa1b8dE834E16eC69C044F5300041673C968c9eF",
+      "neg_risk_ctf_exchange": "0xe7FA09cA716FDf498d74AFF618d32AFeacc310aB",
       "neg_risk_adapter": "0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5",
       "neg_risk_operator": "0x368ed63Ab10F35f2BDD576bDbF6B1eDD151cB619",
       "neg_risk_uma_ctf_adapter": "0x70DC1B3761F2902DF8F9b1B0C27dcEA128b4a876",
       "deposit_wallet_factory_proxy": "0x2CcdC6C5dDcd895aFcCD259F291de9b618A5cA6c",
       "deposit_wallet_beacon": "0x74a618eBdd62Ff8579A8FE94f5B888d7623b9C35",
-      "deposit_wallet_impl": "0xD5D8CdF42DE6AaE41291E41788e5767a137751C7"
+      "deposit_wallet_impl": "0x65507Fa36589B3b2ceD54E77999909e843691e44"
     }
   },
   "optional_env_vars": [

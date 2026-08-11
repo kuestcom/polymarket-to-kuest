@@ -38,14 +38,14 @@ Notes:
 ## Kuest V2 contracts and collateral
 | Name | Address |
 |------|---------|
-| CTF Exchange | `0xaCd95F4F42322c7bE215C170362EEc57Ef4E78c2` |
-| Neg Risk CTF Exchange | `0x961d3230B3BBdb2592D20fa34dBD12Fa19240603` |
+| CTF Exchange | `0xaa1b8dE834E16eC69C044F5300041673C968c9eF` |
+| Neg Risk CTF Exchange | `0xe7FA09cA716FDf498d74AFF618d32AFeacc310aB` |
 | NegRisk Adapter | `0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5` |
 | NegRisk Operator | `0x368ed63Ab10F35f2BDD576bDbF6B1eDD151cB619` |
 | NegRisk UMA CTF Adapter | `0x70DC1B3761F2902DF8F9b1B0C27dcEA128b4a876` |
 | DepositWallet Factory | `0x2CcdC6C5dDcd895aFcCD259F291de9b618A5cA6c` |
 | DepositWallet Beacon | `0x74a618eBdd62Ff8579A8FE94f5B888d7623b9C35` |
-| DepositWallet Impl | `0xD5D8CdF42DE6AaE41291E41788e5767a137751C7` |
+| DepositWallet Impl | `0x65507Fa36589B3b2ceD54E77999909e843691e44` |
 | USDC Circle (Amoy) | `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582` |
 | USDC Circle (Polygon mainnet) | `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359` |
 
