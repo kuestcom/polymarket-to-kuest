@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.4",
-    "updated": "2026-08-04",
+    "version": "1.5",
+    "updated": "2026-08-21",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -177,6 +177,32 @@
       "GET /other",
       "RTDS activity/comment subscriptions"
     ]
+  },
+  "kuest_only_market_mirror_extensions": {
+    "optional": true,
+    "omitted_when_unavailable": true,
+    "base_fields_remain_kuest_identifiers": true,
+    "gamma": {
+      "field_pairs": {
+        "conditionId": "mirrorConditionId",
+        "clobTokenIds": "mirrorClobTokenIds"
+      },
+      "clob_token_ids_format": "JSON-array string with positional pairing",
+      "market_filter": "GET /markets?mirror=true|false"
+    },
+    "clob": {
+      "field_pairs": {
+        "condition_id": "mirror_condition_id",
+        "tokens[].token_id": "tokens[].mirror_token_id",
+        "primary_token_id": "mirror_primary_token_id",
+        "secondary_token_id": "mirror_secondary_token_id"
+      },
+      "compact_clob_market_pairs": {
+        "c": "mirror_condition_id",
+        "t[].t": "t[].mirror_token_id"
+      }
+    },
+    "usage": "Optional for order submission; useful for discovery, arbitrage, and Kuest-to-Polymarket market mapping"
   },
   "verification": {
     "grep_absent": [

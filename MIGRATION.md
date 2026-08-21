@@ -121,6 +121,21 @@ Kuest (slug inputs):
 Migration note:
 - If your Polymarket code stores Gamma event/market IDs, replace them with slugs when calling the Kuest endpoints above.
 
+## Kuest-only market mirror extensions
+Kuest discovery responses may include optional identifiers that relate a Kuest market to its source Polymarket market. These fields extend the Polymarket-compatible payload; they do not replace `conditionId`, `clobTokenIds`, `condition_id`, or `token_id`, which remain the Kuest identifiers used for trading.
+
+Gamma responses use camelCase:
+- `mirrorConditionId` pairs with `conditionId`.
+- `mirrorClobTokenIds` pairs positionally with `clobTokenIds` and uses the same JSON-array string format.
+- `GET /markets?mirror=true|false` optionally filters mirrored or non-mirrored Kuest markets.
+
+CLOB responses use snake_case:
+- `mirror_condition_id` pairs with `condition_id`, or with `c` in the compact `GET /clob-markets/{condition_id}` response.
+- `tokens[].mirror_token_id` pairs with `tokens[].token_id`; compact `t[]` entries use the same `mirror_token_id` beside `t`.
+- `mirror_primary_token_id` and `mirror_secondary_token_id` pair with the corresponding fields from `GET /markets-by-token/{token_id}`.
+
+Mirror fields are omitted when no mapping exists. Bots that only submit orders can ignore them; discovery, arbitrage, and cross-market clients can use them to relate Kuest and Polymarket markets.
+
 ## Machine-readable mapping (for automation/LLMs)
 `mapping.json` provides the same mapping in a machine-readable format and is intended for migration tooling or LLM-assisted refactors. Keep it in sync with this document.
 
