@@ -4,7 +4,7 @@ Purpose:
 - Help agents migrate Polymarket bots, SDK integrations, and direct API clients to Kuest with minimal behavior changes.
 
 Primary rule:
-- Keep business logic intact. Only change hosts, headers, env vars, package names, and network-specific details required for Kuest.
+- Keep business logic intact. Update hosts, headers, env vars, package names, network details, and the Kuest V2 order/signature format.
 
 Required migration rules:
 - Replace every `POLYMARKET_` env var or header prefix with `KUEST_`.
@@ -13,10 +13,13 @@ Required migration rules:
 - Kuest order signing uses Exchange domain version `2`; auth headers keep the auth-domain version used by the SDK.
 - V2 signed orders remove `taker`, `expiration`, `nonce`, and `feeRateBps`.
 - V2 signed orders add `timestamp`, `metadata`, and `builder`.
+- Kuest CLOB trading uses Deposit Wallet as `maker` and `signer`, with signature type `3` (`DEPOSIT_WALLET`).
 - Send order `owner` as the CLOB API key, not `KUEST_ADDRESS`.
 - In Kuest CLOB responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes builder wallets as bytes32.
 - Direct relayer calls use `WALLET` / `WALLET-CREATE` instead of `SAFE` / `PROXY`.
+- Derive Deposit Wallet with `predictWalletAddress(bytes32(uint256(uint160(owner))))`; do not pass an implementation argument.
+- Deploy the Deposit Wallet before posting orders; relayer deployment requires `KUEST_BUILDER_API_KEY`, `KUEST_BUILDER_SECRET`, and `KUEST_BUILDER_PASSPHRASE`.
 - Do not keep `Polymarket CTF Exchange` when building Kuest order signatures.
 
 SDK/package mapping:
@@ -25,6 +28,7 @@ SDK/package mapping:
 - Python package: `py-clob-client` -> `kuest-py-clob-client`
 - Python package: `py-order-utils` -> `kuest-py-order-utils`
 - Python package: `py-builder-signing-sdk` -> `kuest-py-builder-signing-sdk`
+- Python package: `py-builder-relayer-client` -> `kuest-py-builder-relayer-client`
 - Python package: `py-eip712-structs` -> `kuest-py-eip712-structs`
 - Python import rename required: `poly_eip712_structs` -> `kuest_eip712_structs`
 - Python imports unchanged: `py_clob_client`, `py_order_utils`, `py_builder_signing_sdk`

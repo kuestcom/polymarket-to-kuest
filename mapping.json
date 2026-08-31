@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.5",
-    "updated": "2026-08-21",
+    "version": "1.6",
+    "updated": "2026-08-31",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -45,7 +45,7 @@
     },
     "relayer_api": {
       "polymarket": "https://relayer.polymarket.com",
-      "kuest": "https://relayer.kuest.com/"
+      "kuest": "https://relayer.kuest.com"
     },
     "v2_required_paths": {
       "version": "GET /version",
@@ -87,6 +87,10 @@
         "metadata": "bytes32",
         "builder": "bytes32"
       },
+      "signature_type": {
+        "name": "DEPOSIT_WALLET",
+        "value": 3
+      },
       "offchain_fields": [
         "expiration for GTD orders"
       ],
@@ -120,7 +124,7 @@
       "neg_risk_adapter": "0xd9416E904e1ab925ad72F03F6D6ce0Aa80fd2dC5",
       "neg_risk_operator": "0x368ed63Ab10F35f2BDD576bDbF6B1eDD151cB619",
       "neg_risk_uma_ctf_adapter": "0x70DC1B3761F2902DF8F9b1B0C27dcEA128b4a876",
-      "deposit_wallet_factory_proxy": "0x2CcdC6C5dDcd895aFcCD259F291de9b618A5cA6c",
+      "deposit_wallet_factory": "0x2CcdC6C5dDcd895aFcCD259F291de9b618A5cA6c",
       "deposit_wallet_beacon": "0x74a618eBdd62Ff8579A8FE94f5B888d7623b9C35",
       "deposit_wallet_impl": "0x65507Fa36589B3b2ceD54E77999909e843691e44"
     }
@@ -165,6 +169,7 @@
     },
     "typescript": {
       "packages": {
+        "@polymarket/clob-client": "@kuestcom/clob-client",
         "@polymarket/clob-client-v2": "@kuestcom/clob-client",
         "@polymarket/builder-relayer-client": "@kuestcom/builder-relayer-client",
         "@polymarket/builder-signing-sdk": "@kuestcom/builder-signing-sdk"
@@ -221,9 +226,15 @@
   },
   "support": {
     "discord": "https://discord.gg/kuest",
-    "channel": "#dev-chat"
+    "channel": "#builders"
   },
   "relayer_wallet_only": {
+    "builder_credentials_required": true,
+    "builder_credentials": [
+      "KUEST_BUILDER_API_KEY",
+      "KUEST_BUILDER_SECRET",
+      "KUEST_BUILDER_PASSPHRASE"
+    ],
     "deposit_wallet_address_derivation": {
       "factory_method": "predictWalletAddress(bytes32 walletId)",
       "wallet_id": "bytes32(uint256(uint160(owner)))",

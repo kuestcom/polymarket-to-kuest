@@ -6,11 +6,12 @@
   </a>
 </p>
 
-If you already have bots or tooling built for Polymarket, migrating to Kuest
-requires only small changes to endpoints, headers, and environment variables.
+Migrating Polymarket bots to Kuest requires endpoint, authentication, network,
+and V2 signed-order changes.
 
-- Python SDK: https://pypi.org/project/kuest-py-clob-client/
+- TypeScript SDK: `@kuestcom/clob-client`
 - Rust SDK: https://crates.io/crates/kuest-client-sdk
+- Python SDK: https://pypi.org/project/kuest-py-clob-client/
 
 ## What's here
 - [`MIGRATION.md`](./MIGRATION.md) — step-by-step migration guide for humans.
@@ -22,10 +23,11 @@ requires only small changes to endpoints, headers, and environment variables.
 - Replace `*.polymarket.com` with `*.kuest.com` (same subdomain).
 - Kuest order signing uses the EIP-712 domain `CTF Exchange`, version `2`.
 - V2 orders remove `taker`, `expiration`, `nonce`, and `feeRateBps` from the signed payload and add `timestamp`, `metadata`, and `builder`.
-- Send `owner` as the CLOB API key, not the wallet address from `KUEST_ADDRESS`.
+- Use Deposit Wallet as `maker` and `signer`, with signature type `3`.
+- Send `owner` as the CLOB API key, not `KUEST_ADDRESS`.
 - In Kuest CLOB order responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes a builder wallet as `bytes32(uint256(uint160(wallet)))`.
-- For direct relayer calls, use `WALLET` / `WALLET-CREATE` instead of `SAFE` / `PROXY`.
+- Deploy the Deposit Wallet before posting orders. Relayer calls require Builder credentials and use `WALLET` / `WALLET-CREATE`.
 
 ## Network (beta)
 - Kuest beta runs on Polygon Amoy (chainId 80002) and uses testnet USDC.
@@ -37,4 +39,4 @@ requires only small changes to endpoints, headers, and environment variables.
 - USDC Circle (Amoy): `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582`
 - USDC Circle (Polygon mainnet): `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359`
 
-For a step-by-step migration guide, see [MIGRATION.md](./MIGRATION.md).
+For the full migration guide, see [MIGRATION.md](./MIGRATION.md).

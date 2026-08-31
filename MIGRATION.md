@@ -1,6 +1,6 @@
 # Polymarket -> Kuest Migration Guide (Human + Automation)
 
-Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API callers) to Kuest. Keep business logic intact and only change branding, hosts, and auth labels.
+Use this guide to adapt Polymarket trading scripts, SDKs, and direct API clients to Kuest. Keep business logic intact and update endpoints, authentication, network details, and the V2 order format.
 
 ## Quick checklist
 - Replace every `POLYMARKET_` prefix with `KUEST_` in env vars and headers.
@@ -12,8 +12,9 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 - Send `owner` as the CLOB API key (`KUEST_API_KEY`), not the wallet address.
 - In Kuest CLOB responses, deserialize `owner` as a ULID/string user identifier.
 - Use `builderCode`/`builder_code` for attribution; Kuest builder codes are builder wallets encoded as bytes32.
-- Trading is Deposit Wallet + signature type 3 only.
+- Trading uses Deposit Wallet as `maker` and `signer`, with signature type `3`.
 - Direct relayer calls use `WALLET` / `WALLET-CREATE` instead of `SAFE` / `PROXY`.
+- Deploy the Deposit Wallet before posting orders; relayer credentials are separate from CLOB credentials.
 - CLOB, WS, Data, RTDS, and Bridge are otherwise compatible and similar.
 
 ## Network and collateral (beta)
@@ -29,8 +30,8 @@ Use this guide to adapt Polymarket trading scripts (bots, SDK usage, direct API 
 | Bridge API   | https://bridge.polymarket.com                | https://bridge.kuest.com                |
 | RTDS WS      | wss://ws-live-data.polymarket.com            | wss://ws-live-data.kuest.com            |
 | Gamma API    | https://gamma-api.polymarket.com             | https://gamma-api.kuest.com             |
-| Geoblock API | https://api.polymarket.com                   | https://api.kuest.com                   |
-| Relayer API  | https://relayer.polymarket.com               | https://relayer.kuest.com/              |
+| Geoblock API | https://polymarket.com/api/geoblock          | https://geoblock.kuest.com              |
+| Relayer API  | https://relayer.polymarket.com               | https://relayer.kuest.com               |
 
 Notes:
 - For V2 discovery and builder flows, wire `GET /version`, `GET /clob-markets/{conditionId}`, `GET /fees/builder-fees/{builderCode}`, and `GET /builder/trades?builder_code=...`.
@@ -77,6 +78,8 @@ Add these fields to the signed payload:
 - `metadata` as bytes32
 - `builder` as bytes32
 
+For signature type `3`, use the Deposit Wallet signature envelope; a plain EOA signature is not accepted.
+
 Do not send fee basis points in the order signature. The CLOB calculates Kuest + builder fees and sends absolute USDC fee amounts to the V2 exchanges during settlement.
 
 ## Environment variables
@@ -93,6 +96,9 @@ Replace env vars exactly:
 Optional endpoint env vars (same names):
 - `CLOB_API_URL`, `WS_CLOB_URL`, `DATA_API_URL`, `BRIDGE_API_URL`, `RTDS_WS_URL`, `GAMMA_API_URL`
 
+Builder relayer env vars:
+- `KUEST_BUILDER_API_KEY`, `KUEST_BUILDER_SECRET`, `KUEST_BUILDER_PASSPHRASE`
+
 ## SDK and package mapping
 ### Rust
 - Crate: https://crates.io/crates/kuest-client-sdk
@@ -101,15 +107,20 @@ Optional endpoint env vars (same names):
 
 ### Python (pip)
 - PyPI: https://pypi.org/project/kuest-py-clob-client/
-- Install (Python 3.9+): `pip install kuest-py-clob-client`
-- The client pulls its required dependencies automatically.
+- Install: `pip install kuest-py-clob-client`
+- Related packages: `kuest-py-order-utils`, `kuest-py-builder-relayer-client`, `kuest-py-builder-signing-sdk`, and `kuest-py-eip712-structs`.
 
-If you directly use other Polymarket Python subpackages, see `mapping.json` for the full package mapping.
+See `mapping.json` for the full package and import mapping.
 
-### Builder relayer clients
-- TypeScript: `@polymarket/builder-relayer-client` -> `@kuestcom/builder-relayer-client`
-- Python: `py-builder-relayer-client` -> `kuest-py-builder-relayer-client`
-- Use only Deposit Wallet methods: derive, deploy, execute batch, and transaction polling.
+### TypeScript
+- CLOB: `@polymarket/clob-client` -> `@kuestcom/clob-client`
+- Builder signing: `@polymarket/builder-signing-sdk` -> `@kuestcom/builder-signing-sdk`
+- Builder relayer: `@polymarket/builder-relayer-client` -> `@kuestcom/builder-relayer-client`
+
+### Deposit Wallet relayer
+- Derive `walletId` as `bytes32(uint256(uint160(owner)))`, then call `predictWalletAddress(bytes32 walletId)`.
+- Do not pass the implementation address to `predictWalletAddress`.
+- Use `WALLET-CREATE` to deploy and `WALLET` for Deposit Wallet batches.
 
 ## Slug-based lookups (Kuest vs Polymarket IDs)
 Kuest uses slugs in a few market-scoped endpoints where Polymarket typically relies on Gamma IDs.
