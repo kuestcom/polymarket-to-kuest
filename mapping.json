@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.6",
-    "updated": "2026-08-31",
+    "version": "1.7",
+    "updated": "2026-09-14",
     "source": "polymarket",
     "target": "kuest",
     "purpose": "Machine-readable mapping for automated migrations and LLM-assisted refactors"
@@ -111,9 +111,8 @@
       "collateral": "pUSD"
     },
     "kuest": {
-      "chain_id": 80002,
+      "chain_id": 137,
       "collateral": "USDC Circle",
-      "usdc_amoy": "0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582",
       "usdc_mainnet": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359"
     }
   },

@@ -29,14 +29,13 @@ and V2 signed-order changes.
 - Use `builderCode`/`builder_code` for attribution; Kuest encodes a builder wallet as `bytes32(uint256(uint160(wallet)))`.
 - Deploy the Deposit Wallet before posting orders. Relayer calls require Builder credentials and use `WALLET` / `WALLET-CREATE`.
 
-## Network (beta)
-- Kuest beta runs on Polygon Amoy (chainId 80002) and uses testnet USDC.
+## Network
+- Kuest runs on Polygon Mainnet (chainId 137) and uses Circle USDC.
 - Polymarket V2 uses Polygon (chainId 137) and pUSD collateral; Kuest V2 uses USDC Circle directly.
 
 ## Kuest V2 contracts and collateral
 - CTF Exchange: `0xaa1b8dE834E16eC69C044F5300041673C968c9eF`
 - Neg Risk CTF Exchange: `0xe7FA09cA716FDf498d74AFF618d32AFeacc310aB`
-- USDC Circle (Amoy): `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582`
 - USDC Circle (Polygon mainnet): `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359`
 
 For the full migration guide, see [MIGRATION.md](./MIGRATION.md).

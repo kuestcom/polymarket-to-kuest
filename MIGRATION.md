@@ -17,8 +17,8 @@ Use this guide to adapt Polymarket trading scripts, SDKs, and direct API clients
 - Deploy the Deposit Wallet before posting orders; relayer credentials are separate from CLOB credentials.
 - CLOB, WS, Data, RTDS, and Bridge are otherwise compatible and similar.
 
-## Network and collateral (beta)
-- Kuest beta is on Polygon Amoy (chainId 80002) and uses testnet USDC.
+## Network and collateral
+- Kuest runs on Polygon Mainnet (chainId 137) and uses Circle USDC.
 - Polymarket V2 uses Polygon (chainId 137) and pUSD collateral; Kuest V2 uses USDC Circle directly.
 
 ## Endpoint mapping
@@ -47,7 +47,6 @@ Notes:
 | DepositWallet Factory | `0x2CcdC6C5dDcd895aFcCD259F291de9b618A5cA6c` |
 | DepositWallet Beacon | `0x74a618eBdd62Ff8579A8FE94f5B888d7623b9C35` |
 | DepositWallet Impl | `0x65507Fa36589B3b2ceD54E77999909e843691e44` |
-| USDC Circle (Amoy) | `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582` |
 | USDC Circle (Polygon mainnet) | `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359` |
 
 ## Auth header mapping

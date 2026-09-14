@@ -34,7 +34,7 @@ SDK/package mapping:
 - Python imports unchanged: `py_clob_client`, `py_order_utils`, `py_builder_signing_sdk`
 
 Network rules:
-- Kuest beta uses Polygon Amoy, chainId `80002`
+- Kuest runs on Polygon Mainnet, chainId `137`
 - Polymarket mainnet uses Polygon, chainId `137`
 - Kuest uses USDC Circle directly
 - Polymarket V2 uses pUSD collateral on mainnet
